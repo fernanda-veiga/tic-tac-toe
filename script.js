@@ -1,18 +1,17 @@
 //Gameboard module
 const gameboard = (() => {
     const squares = Array.from(document.querySelectorAll(".square"));
-    const squaresEventListener = (() => {
+    const addMarkerToSquare = (() => {
         squares.forEach(square => {
             square.addEventListener("click", () => {
-                square.textContent = game.whichMarkerNow();
-                game.changeTurn();
+                //Only adds a new marker to the square if it is empty
+                if (square.textContent === "") {
+                    square.textContent = game.whichMarkerNow();
+                    game.changeTurn(); 
+                }
             });
         })
     })();
-    
-    
-
-
     return {squares};
 })();
 
