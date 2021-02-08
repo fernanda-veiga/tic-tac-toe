@@ -7,11 +7,16 @@ const gameboard = (() => {
                 //Only adds a new marker to the square if it is empty
                 if (square.textContent === "") {
                     square.textContent = game.whichMarkerNow();
+                    currentSquareIndex = getSquareIndex(square);
+                    console.log(currentSquareIndex);
                     game.changeTurn(); 
                 }
             });
         })
     })();
+    const getSquareIndex = (square) => {
+        return square.id.split(",");
+    }
     return {squares};
 })();
 
@@ -34,6 +39,16 @@ const game = (() => {
         } else {
             playerOne.turn = 1; playerTwo.turn = 0;
         }
+    }
+    const checkIfWinner = () => {
+        const checkRow = () => {
+            let rowInit = [0, 0, 0];
+
+        }
+        let countColumn = [0, 0, 0];
+        let countDiag = [0, 0, 0];
+        let countOppDiag = [0, 0, 0];
+
     }
     return {whichMarkerNow, changeTurn};
 })();
