@@ -28,10 +28,12 @@ const player = (playerName, playerMarker, playerTurn) => {
     const name = playerName;
     const marker = playerMarker;
     const turn = playerTurn;
+
     let rowCount = [0, 0, 0];
     let columnCount = [0, 0, 0];
     let diagCount = [0, 0, 0];
     let oppositeDiagCount = [0, 0, 0];
+    
     return {name, marker, turn, rowCount, columnCount, diagCount, oppositeDiagCount};
 }
 
@@ -51,38 +53,39 @@ const game = (() => {
         }
     }
 
-    //let rowCount = [0, 0, 0];
-    //let columnCount = [0, 0, 0];
-    //let diagCount = [0, 0, 0];
-    //let oppositeDiagCount = [0, 0, 0];
-
-    const checkIfWinner = (currentSquareIndex, player) => {
-        console.log(player)
+    const checkIfWinner = (squareIndex, player) => {
         const checkRow = (() => {
-            player.rowCount[currentSquareIndex[0]] += 1;
-            console.log(player.rowCount);
+            player.rowCount[squareIndex[0]] += 1;
         })();
         const checkColumn = (() => {
-            player.columnCount[currentSquareIndex[1]] += 1;
-            console.log(player.columnCount);
+            player.columnCount[squareIndex[1]] += 1;
         })();
         const checkDiag = (() => {
-            if (currentSquareIndex[0] === currentSquareIndex[1]) {
-                player.diagCount[currentSquareIndex[0]] += 1;
-                console.log(player.diagCount);
+            if (squareIndex[0] === squareIndex[1]) {
+                player.diagCount[squareIndex[0]] += 1;;
             }
         })();
         const checkOppositeDiag = (() => {
-            if (currentSquareIndex[0] + currentSquareIndex[1] + 1 === 3) {
-                player.oppositeDiagCount[currentSquareIndex[1]] += 1;
-                console.log(player.oppositeDiagCount);
+            if (squareIndex[0] + squareIndex[1] + 1 === 3) {
+                player.oppositeDiagCount[squareIndex[0]] += 1;
             }
         })();
 
-        if (player.rowCount.some(item => item === 3) || player.columnCount.some(item => item === 3) || player.diagCount.every(item => item === 1) || player.oppositeDiagCount.every(item => item === 1)) {
-            console.log(`${player.name} is the winner!`);
+        if (player.rowCount.some(item => item === 3) || 
+            player.columnCount.some(item => item === 3) || 
+            player.diagCount.every(item => item === 1) || 
+            player.oppositeDiagCount.every(item => item === 1)
+            ) {
+            displayWinner(player);
         }
     }
+
+    const displayWinner = (player) => {
+        const displayWinnerDiv = document.querySelector(".winner-display");
+        displayWinnerDiv.style.display = "block";
+        displayWinnerDiv.textContent = `${player.name} is the winner!`;
+    }
+
     return {whichPlayerNow, changeTurn, checkIfWinner};
 })();
 

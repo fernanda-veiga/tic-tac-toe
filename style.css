@@ -15,3 +15,10 @@
     height: 25px;
     border: 2px solid black;
 }
+
+.winner-display {
+    display: none;
+    width: 100px;
+    height: 100px;
+    background-color: aqua;
+}
