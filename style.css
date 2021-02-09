@@ -4,21 +4,95 @@
     box-sizing: border-box;
 }
 
+body {
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    color: #FFBE0B;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 60px;
+    margin-bottom: 50px;
+}
+
 .gameboard {
+    width: 400px;
+    height: 400px;
+    margin-bottom: 50px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
 }
 
 .square {
-    width: 25px;
-    height: 25px;
-    border: 2px solid black;
+    color: whitesmoke;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 0.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: font-size 0.5s;
 }
+
+.square-animation {
+    font-size: 5em;
+}
+
+.scoreboard {
+    width: 400px;
+    color: #FFBE0B;
+    font-family: 'Patrick Hand', cursive;
+    font-size: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.player-one, .player-two {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/*.player-marker-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}*/
+
+/*.winner-animation {
+    color: whitesmoke;
+    animation-name: win;
+    animation-duration: 1s;
+    animation-delay: 0.5s;
+}
+
+@keyframes win {
+    0% {color: gray;}
+    25% {color: whitesmoke;}
+    50% {color: whitesmoke;}
+    100% {color: whitesmoke;}
+}*/
 
 .winner-display {
     display: none;
     width: 100px;
     height: 100px;
     background-color: aqua;
+}
+
+/*BORDERS*/
+[id="0,0"], [id="1,0"], [id="2,0"], [id="0,1"], [id="1,1"], [id="2,1"] {
+    border-right: 5px solid #8338EC;
+}
+
+[id="0,0"], [id="0,1"], [id="0,2"], [id="1,0"], [id="1,1"], [id="1,2"] {
+    border-bottom: 5px solid #8338EC;
 }
