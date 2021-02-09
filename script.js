@@ -1,29 +1,3 @@
-//Gameboard module
-const gameboard = (() => {
-    const squares = Array.from(document.querySelectorAll(".square"));
-    
-    const addMarkerToSquare = (() => {
-        squares.forEach(square => {
-            square.addEventListener("click", () => {
-                //Only adds a new marker to the square if it is empty
-                if (square.textContent === "") {
-                    square.textContent = game.whichPlayerNow().marker;
-                    currentSquareIndex = getSquareIndex(square);
-                    game.checkIfWinner(currentSquareIndex, game.whichPlayerNow());
-                    game.changeTurn();
-                }
-            });
-        })
-    })();
-    
-    const getSquareIndex = (square) => {
-        let splitArray = square.id.split(",");
-        return splitArray.map(item => Number(item));
-    }
-
-    return {squares};
-})();
-
 const player = (playerName, playerMarker, playerTurn) => {
     const name = playerName;
     const marker = playerMarker;
@@ -33,12 +7,45 @@ const player = (playerName, playerMarker, playerTurn) => {
     let columnCount = [0, 0, 0];
     let diagCount = [0, 0, 0];
     let oppositeDiagCount = [0, 0, 0];
+
+    let won = 0;
     
-    return {name, marker, turn, rowCount, columnCount, diagCount, oppositeDiagCount};
+    return {name, marker, turn, rowCount, columnCount, diagCount, oppositeDiagCount, won};
 }
 
 let playerOne = player("John", "X", 1);
 let playerTwo = player("Mark", "O", 0);
+
+const gameboard = (() => {
+    const squares = Array.from(document.querySelectorAll(".square"));
+
+    const toggleEventListener = () => {
+        squares.forEach(square => {
+            square.addEventListener("click", function addMarker(){
+                if (playerOne.won === 1 || playerTwo.won === 1) {
+                    this.removeEventListener("click", addMarker);
+                }
+                else {
+                    if (square.textContent === "") {
+                        square.textContent = game.whichPlayerNow().marker;
+                        currentSquareIndex = getSquareIndex(square);
+                        game.checkIfWinner(currentSquareIndex, game.whichPlayerNow());
+                        game.changeTurn();
+                    }
+                }
+            });
+        })
+    }
+
+    toggleEventListener();
+    
+    const getSquareIndex = (square) => {
+        let splitArray = square.id.split(",");
+        return splitArray.map(item => Number(item));
+    }
+
+    return {squares, toggleEventListener};
+})();
 
 const game = (() => {
     const whichPlayerNow = () => {
@@ -77,6 +84,8 @@ const game = (() => {
             player.oppositeDiagCount.every(item => item === 1)
             ) {
             displayWinner(player);
+            player.won = 1;
+            gameboard.toggleEventListener();
         }
     }
 
@@ -84,6 +93,7 @@ const game = (() => {
         const displayWinnerDiv = document.querySelector(".winner-display");
         displayWinnerDiv.style.display = "block";
         displayWinnerDiv.textContent = `${player.name} is the winner!`;
+        
     }
 
     return {whichPlayerNow, changeTurn, checkIfWinner};
