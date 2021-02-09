@@ -139,3 +139,70 @@ body {
 [id="0,0"], [id="0,1"], [id="0,2"], [id="1,0"], [id="1,1"], [id="1,2"] {
     border-bottom: 10px solid #03DAC6;
 }
+
+/*RESPONSIVITY*/
+@media (max-width: 650px) {
+    .start-game h1 {
+        font-size: 12vw;
+    }
+    
+    .start-game h2 {
+        margin-bottom: 30px;
+        font-size: 7vw;
+    }
+
+    .start-game div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .start-game button {
+        width: 25vw;
+        font-size: 4vw;
+    }
+    
+    #against-player-btn {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 550px) {    
+    .game-container h1 {
+        font-size: 12vw;
+    }
+    
+    .gameboard {
+        width: 70vw;
+        height: 70vw;
+    }
+    
+    .square-animation {
+        font-size: 12vw;
+    }
+    
+    .winner-display {
+        height: 6vw;
+        font-size: 5vw;
+    }
+    
+    .game-container button {
+        width: 25vw;
+        font-size: 4vw;
+    }
+    
+    #back-btn {
+        margin-right: 20px;
+    }
+    
+    /*BORDERS*/
+    [id="0,0"], [id="1,0"], [id="2,0"], [id="0,1"], [id="1,1"], [id="2,1"] {
+        border-right: 1.2vw solid #03DAC6;
+    }
+    
+    [id="0,0"], [id="0,1"], [id="0,2"], [id="1,0"], [id="1,1"], [id="1,2"] {
+        border-bottom: 1.2vw solid #03DAC6;
+    }
+}
