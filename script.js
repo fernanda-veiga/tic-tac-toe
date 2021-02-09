@@ -19,17 +19,21 @@ let playerTwo = player("Player Two", "O", 0);
 const gameboard = (() => {
     const squares = Array.from(document.querySelectorAll(".square"));
     
-    //const playAgainstComputerBtn = document.querySelector("#against-computer-btn");
+    const playAgainstPlayerBtn = document.querySelector("#against-player-btn");
+    const playAgainstComputerBtn = document.querySelector("#against-computer-btn");
 
-    const startGame = (() => {
-        const playAgainstPlayerBtn = document.querySelector("#against-player-btn");
-        playAgainstPlayerBtn.addEventListener("click", () => {
-            const firstPage = document.querySelector(".start-game");
-            const secondPage = document.querySelector(".game-container");
-            firstPage.style.display = "none";
-            secondPage.style.display = "flex";
-        })
-    })();
+    const startGame = () => {
+        const firstPage = document.querySelector(".start-game");
+        const secondPage = document.querySelector(".game-container");
+        firstPage.style.display = "none";
+        secondPage.style.display = "flex";
+    };
+
+    playAgainstPlayerBtn.addEventListener("click", startGame);
+    playAgainstComputerBtn.addEventListener("click", () => {
+        startGame();
+        playerTwo.name = "Computer";
+    });
 
     const initializeGame = () => {
         const displayWinnerDiv = document.querySelector(".winner-display");
@@ -59,6 +63,7 @@ const gameboard = (() => {
             firstPage.style.display = "flex";
             secondPage.style.display = "none";
             initializeGame();
+            playerTwo.name = "Player Two";
         })
     })();
 
@@ -114,7 +119,12 @@ const gameboard = (() => {
                         currentSquareIndex = getSquareIndex(square);
                         game.checkIfWinner(currentSquareIndex, game.whichPlayerNow());
                         game.changeTurn();
-                    }
+
+                        //Checks if the player two is a computer
+                        if (playerTwo.name === "Computer" && playerTwo.turn === 1) {
+                            game.computerPlays();
+                        }
+                    } 
                 }
             });
         })
@@ -125,9 +135,7 @@ const gameboard = (() => {
         return splitArray.map(item => Number(item));
     }
 
-    
-
-    return {squares, changeColorOfMarker};
+    return {squares, changeColorOfMarker, getSquareIndex};
 })();
 
 const game = (() => {
@@ -187,7 +195,30 @@ const game = (() => {
         }
     }
 
-    return {whichPlayerNow, changeTurn, checkIfWinner};
+    const computerChoosesSquare = () => {
+        let number = 0;
+        //Checks if it's the last play for the player one
+        if (gameboard.squares.findIndex(square => square.textContent === "") === -1) {
+            return;
+        }
+        else {
+            do {
+                number = Math.floor(Math.random() * gameboard.squares.length);
+            } while(gameboard.squares[number].textContent !== "")
+            return number;
+        } 
+    }
+
+    const computerPlays = () => {
+        index = computerChoosesSquare();
+        gameboard.squares[index].textContent = whichPlayerNow().marker;
+        gameboard.squares[index].classList.add("square-animation");
+        currentSquareIndex = gameboard.getSquareIndex(gameboard.squares[index]);
+        checkIfWinner(currentSquareIndex, whichPlayerNow());
+        changeTurn();
+    }
+
+    return {whichPlayerNow, changeTurn, checkIfWinner, computerPlays};
 })();
 
 
