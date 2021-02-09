@@ -4,31 +4,46 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Patrick+Hand&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
     <title>Tic Tac Toe</title>
 </head>
 <body>
-    <h1>Tic-Tac-Toe</h1>
+    
 
     <div class="start-game">
-
+        <h1>Tic-Tac-Toe</h1>
+        <h2>Play against</h2>
+        <div>
+            <button id="against-player-btn" type="button">Player</button>
+            <button id="against-computer-btn" type="button">Computer</button> 
+        </div>
     </div>
 
-    <div class="gameboard">
-        <div id="0,0" class="square"></div>
-        <div id="0,1" class="square"></div>
-        <div id="0,2" class="square"></div>
-        <div id="1,0" class="square"></div>
-        <div id="1,1" class="square"></div>
-        <div id="1,2" class="square"></div>
-        <div id="2,0" class="square"></div>
-        <div id="2,1" class="square"></div>
-        <div id="2,2" class="square"></div>
+    <div class="game-container">
+        <h1>Tic-Tac-Toe</h1>
+        <div class="gameboard">
+            <div id="0,0" class="square"></div>
+            <div id="0,1" class="square"></div>
+            <div id="0,2" class="square"></div>
+            <div id="1,0" class="square"></div>
+            <div id="1,1" class="square"></div>
+            <div id="1,2" class="square"></div>
+            <div id="2,0" class="square"></div>
+            <div id="2,1" class="square"></div>
+            <div id="2,2" class="square"></div>
+        </div>
+        <div class="winner-display"></div>
+        <div>
+            <button id="back-btn" type="button"><i class="fas fa-chevron-left"></i> Back</button>
+            <button id="replay-btn" type="button"><i class="fas fa-undo"></i> Replay</button> 
+        </div>
     </div>
+    
 
-    <div class="scoreboard">
+    <!--<div class="scoreboard">
         <div class="player-one">
             <div class="player-name"></div>
             <div class="player-marker"></div>
@@ -40,9 +55,9 @@
         </div>
         
         
-    </div>
+    </div>-->
 
-    <div class="winner-display"></div>
+    
     
 </body>
 <script src="./script.js"></script>

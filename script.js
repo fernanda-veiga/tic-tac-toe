@@ -13,19 +13,57 @@ const player = (playerName, playerMarker, playerTurn) => {
     return {name, marker, turn, rowCount, columnCount, diagCount, oppositeDiagCount, won};
 }
 
-let playerOne = player("John", "X", 1);
-let playerTwo = player("Mark", "O", 0);
+let playerOne = player("Player One", "X", 1);
+let playerTwo = player("Player Two", "O", 0);
 
 const gameboard = (() => {
     const squares = Array.from(document.querySelectorAll(".square"));
-    const scoreboardPlayerName = Array.from(document.querySelectorAll(".player-name"));
-    const scoreboardPlayerMarker = Array.from(document.querySelectorAll(".player-marker"));
+    
+    //const playAgainstComputerBtn = document.querySelector("#against-computer-btn");
 
-    const giveInfoToScoreboard = (() => {
-        scoreboardPlayerName[0].textContent = playerOne.name;
-        scoreboardPlayerName[1].textContent = playerTwo.name;
-        scoreboardPlayerMarker[0].textContent = playerOne.marker;
-        scoreboardPlayerMarker[1].textContent = playerTwo.marker;
+    const startGame = (() => {
+        const playAgainstPlayerBtn = document.querySelector("#against-player-btn");
+        playAgainstPlayerBtn.addEventListener("click", () => {
+            const firstPage = document.querySelector(".start-game");
+            const secondPage = document.querySelector(".game-container");
+            firstPage.style.display = "none";
+            secondPage.style.display = "flex";
+        })
+    })();
+
+    const initializeGame = () => {
+        const displayWinnerDiv = document.querySelector(".winner-display");
+        squares.forEach(square => square.textContent = "")
+        playerOne.won = 0;
+        playerTwo.won = 0;
+        playerOne.turn = 1;
+        playerTwo.turn = 0;
+        displayWinnerDiv.textContent = "";
+        initializeCounters(playerOne);
+        initializeCounters(playerTwo);
+    }
+
+    const initializeCounters = (player) => {
+        player.rowCount = [0, 0, 0];
+        player.columnCount = [0, 0, 0];
+        player.diagCount = [0, 0, 0];
+        player.oppositeDiagCount = [0, 0, 0];
+    };
+
+    const backToFirstPage = (() => {
+        const backBtn = document.querySelector("#back-btn");
+        backBtn.addEventListener("click", () => {
+            const firstPage = document.querySelector(".start-game");
+            const secondPage = document.querySelector(".game-container");
+            firstPage.style.display = "flex";
+            secondPage.style.display = "none";
+            initializeGame();
+        })
+    })();
+
+    const replayGame = (() => {
+        const replayBtn = document.querySelector("#replay-btn");
+        replayBtn.addEventListener("click", initializeGame);
     })();
 
     const toggleEventListener = (() => {
@@ -54,16 +92,7 @@ const gameboard = (() => {
         return splitArray.map(item => Number(item));
     }
 
-    /*const giveWinnerAnimation = (square) => {
-        if (player.rowCount.some(item => item === 3)) {
-            
-        }
-        if (player.columnCount.some(item => item === 3)) {
-
-        }
-    }*/
-
-    return {squares, /*toggleEventListener*/};
+    return {squares};
 })();
 
 const game = (() => {
@@ -105,19 +134,25 @@ const game = (() => {
             displayWinner(player);
             player.won = 1;
         }
+        else {
+            if (gameboard.squares.every(square => square.textContent !== "")) {
+                displayWinner("tie");
+            }
+        }
     }
 
-    const displayWinner = (player) => {
+    const displayWinner = (winner) => {
         const displayWinnerDiv = document.querySelector(".winner-display");
-        displayWinnerDiv.style.display = "block";
-        displayWinnerDiv.textContent = `${player.name} is the winner!`;
+        if (winner == "tie") {
+            displayWinnerDiv.textContent = `It's a tie!`;
+        }
+        else {
+            displayWinnerDiv.textContent = `${winner.name} is the winner!`;
+        }
     }
 
     return {whichPlayerNow, changeTurn, checkIfWinner};
 })();
 
 
-//TODO: Beautify CSS
-//TODO: Add form to take the player name and marker of choice
-//TODO: Play again button
 //TODO: Add computer player
