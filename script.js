@@ -220,6 +220,3 @@ const game = (() => {
 
     return {whichPlayerNow, changeTurn, checkIfWinner, computerPlays};
 })();
-
-
-//TODO: Add computer player
