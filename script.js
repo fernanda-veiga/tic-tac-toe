@@ -33,7 +33,8 @@ const gameboard = (() => {
 
     const initializeGame = () => {
         const displayWinnerDiv = document.querySelector(".winner-display");
-        squares.forEach(square => square.textContent = "")
+        squares.forEach(square => square.textContent = "");
+        squares.forEach(square => square.style.color = "#FFFFFF");
         playerOne.won = 0;
         playerTwo.won = 0;
         playerOne.turn = 1;
@@ -66,6 +67,38 @@ const gameboard = (() => {
         replayBtn.addEventListener("click", initializeGame);
     })();
 
+    const changeColorOfMarker = () => {
+        let winner = playerOne.won === 1 ? playerOne : playerTwo;
+        let squareIndex = {
+            row: {0: [0, 1, 2], 1: [3, 4, 5], 2: [6, 7, 8]},
+            column: {0: [0, 3, 6], 1: [1, 4, 7], 2: [2, 5, 8]}
+        }
+        if (winner.rowCount.some(item => item === 3)) {
+            let rowIndex = winner.rowCount.indexOf(3);
+            let index = squareIndex.row[rowIndex];
+            gameboard.squares[index[0]].style.color = "#BB86FC";
+            gameboard.squares[index[1]].style.color = "#BB86FC";
+            gameboard.squares[index[2]].style.color = "#BB86FC";
+        }
+        if (winner.columnCount.some(item => item === 3)) {
+            let columnIndex = winner.columnCount.indexOf(3);
+            let index = squareIndex.column[columnIndex];
+            gameboard.squares[index[0]].style.color = "#BB86FC";
+            gameboard.squares[index[1]].style.color = "#BB86FC";
+            gameboard.squares[index[2]].style.color = "#BB86FC";
+        }
+        if (winner.diagCount.every(item => item === 1)) {
+            gameboard.squares[0].style.color = "#BB86FC";
+            gameboard.squares[4].style.color = "#BB86FC";
+            gameboard.squares[8].style.color = "#BB86FC";
+        }
+        if (winner.oppositeDiagCount.every(item => item === 1)) {
+            gameboard.squares[2].style.color = "#BB86FC";
+            gameboard.squares[4].style.color = "#BB86FC";
+            gameboard.squares[6].style.color = "#BB86FC";
+        }
+    }
+
     const toggleEventListener = (() => {
         squares.forEach(square => {
             square.addEventListener("click", function addMarker(){
@@ -92,7 +125,9 @@ const gameboard = (() => {
         return splitArray.map(item => Number(item));
     }
 
-    return {squares};
+    
+
+    return {squares, changeColorOfMarker};
 })();
 
 const game = (() => {
@@ -133,6 +168,7 @@ const game = (() => {
             ) {
             displayWinner(player);
             player.won = 1;
+            gameboard.changeColorOfMarker();
         }
         else {
             if (gameboard.squares.every(square => square.textContent !== "")) {
